@@ -29,6 +29,15 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
+
+      - name: Upload artifact for deployment jobs
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-app
+          path: |
+            . 
+            !venv/
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
