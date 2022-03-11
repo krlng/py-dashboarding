@@ -1,0 +1,7 @@
+data
+dashboards/covid/data
+dashboards/covid/data2
+.ipynb_checkpoints
+.DS_Store
+other
+**/.ipynb_checkpoints
