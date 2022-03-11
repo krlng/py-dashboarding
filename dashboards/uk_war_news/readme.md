@@ -1,23 +1,14 @@
+# Dashboard for newspaper articles on ukraine war
 
+[Visit the Dashboard](https://ukraine-war-news-dashboard.azurewebsites.net/VisualizeUkraine) (only properly working on desktop and it might take some time to load)
 
-
-
-
-
-## Serve
+## Serve the Dashboard locally
 
 **Locally**
 
 ```python -m panel serve app.py --address 0.0.0.0 --port 8000 --allow-websocket-origin=app-name.azurewebsites.net```
 
+## Todo
 
-
-**Azure Web Apps**
-
-```bash
-az webapp create \
-    --name MY_WEBAPP_NAME \
-    --plan MY_APP_SERVICE_PLAN \
-    --resource-group MY_RESOURCE_GROUP \
-    --runtime "python|3.8"
-```
+- [ ] Translate articles
+- [ ] Create better hover menus
