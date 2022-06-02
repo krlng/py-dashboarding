@@ -1,81 +1,26 @@
-import altair as alt
-import pandas as pd
 import streamlit as st
-from vega_datasets import data
+import pandas as pd
+from datetime import datetime as dt
+import datetime
 
-# Define the base time-series chart.
-def get_chart(data):
-    hover = alt.selection_single(
-        fields=["date"],
-        nearest=True,
-        on="mouseover",
-        empty="none",
-    )
+import plotly.express as px
 
-    lines = (
-        alt.Chart(data, title="Evolution of stock prices")
-        .mark_line()
-        .encode(
-            x="date",
-            y="price",
-            color="symbol",
-        )
-    )
+st.title('New Cases per Continent')
 
-    # Draw points on the line, and highlight based on selection
-    points = lines.transform_filter(hover).mark_circle(size=65)
+@st.cache
+def load_data():
+    raw_data = pd.read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+    countries = raw_data.dropna(subset=["continent"])
+    countries = countries.assign(date = pd.to_datetime(countries.date).dt.date)
+    return countries.groupby(["date","continent"])["new_cases"].sum().reset_index()
 
-    # Draw a rule at the location of the selection
-    tooltips = (
-        alt.Chart(data)
-        .mark_rule()
-        .encode(
-            x="yearmonthdate(date)",
-            y="price",
-            opacity=alt.condition(hover, alt.value(0.3), alt.value(0)),
-            tooltip=[
-                alt.Tooltip("date", title="Date"),
-                alt.Tooltip("price", title="Price (USD)"),
-            ],
-        )
-        .add_selection(hover)
-    )
-    return (lines + points + tooltips).interactive()
+def display_continent(aggregation, start_date):
+    plot_df = df.loc[df.date > start_date]
+    plot_df = plot_df.groupby("continent").rolling(aggregation, on="date").new_cases.mean().reset_index()
+    chart =  px.line(plot_df, x="date", y="new_cases", color="continent", title="New Cases per continent")
+    st.plotly_chart(chart)
 
-
-@st.experimental_memo
-def get_data():
-    source = data.stocks()
-    source = source[source.date.gt("2004-01-01")]
-    return source
-
-source = get_data()
-
-# Original time series chart. Omitted `get_chart` for clarity
-chart = get_chart(source)
-
-# Input annotations
-ANNOTATIONS = [
-    ("Mar 01, 2008", "Pretty good day for GOOG"),
-    ("Dec 01, 2007", "Something's going wrong for GOOG & AAPL"),
-    ("Nov 01, 2008", "Market starts again thanks to..."),
-    ("Dec 01, 2009", "Small crash for GOOG after..."),
-]
-
-# Create a chart with annotations
-annotations_df = pd.DataFrame(ANNOTATIONS, columns=["date", "event"])
-annotations_df.date = pd.to_datetime(annotations_df.date)
-annotations_df["y"] = 0
-annotation_layer = (
-    alt.Chart(annotations_df)
-    .mark_text(size=15, text="⬇", dx=-3, dy=-10, align="center")
-    .encode(
-        x="date:T",
-        y=alt.Y("y:Q"),
-        tooltip=["event"],
-    )
-    .interactive()
-)
-
-# Display both charts together
-st.altair_chart((chart + annotation_layer).interactive(), use_container_width=True)
+df = load_data()
+aggregation_period = st.number_input(min_value=1, max_value=30, value=7, step=1, label="Aggregation")
+start_date = st.date_input("Start date", (dt.today()-datetime.timedelta(days=365)).date())
+display_continent(aggregation_period, start_date)
