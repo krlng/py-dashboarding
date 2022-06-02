@@ -5,3 +5,10 @@ poetry shell
 jupyter labextension install plotlywidget
 ```
 
+Visual Data Exploration Workshop
+
+
+
+Repo-Structure:
+
+* Correlcon

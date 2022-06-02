@@ -1,4 +1,4 @@
-data
+data/*.csv
 dashboards/covid/data
 dashboards/covid/data2
 .ipynb_checkpoints

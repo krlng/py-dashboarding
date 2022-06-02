@@ -6,7 +6,7 @@
 
 **Locally**
 
-```python -m panel serve app.py --address 0.0.0.0 --port 8000 --allow-websocket-origin=app-name.azurewebsites.net```
+```python -m panel serve dashboards/uk_war_news/VisualizeUkraine.ipynb --address 0.0.0.0 --port 8000 --allow-websocket-origin=0.0.0.0:8000 --allow-websocket-origin=ukraine-war-news-dashboard.azurewebsites.net```
 
 ## Todo
 
