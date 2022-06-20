@@ -22,6 +22,7 @@ bokeh = "^2.4.3"
 watchdog = "^2.1.8"
 voila = "^0.3.5"
 hvplot = "^0.8.0"
+geopandas = "^0.10.2"
 
 [tool.poetry.dev-dependencies]
 ipykernel = "^6.5.0"

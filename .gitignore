@@ -1,4 +1,5 @@
-data/*.csv
+data/airlines/*
+data/covid/*
 dashboards/covid/data
 dashboards/covid/data2
 .ipynb_checkpoints
