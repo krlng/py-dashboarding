@@ -1,3 +1,5 @@
+[![Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/krlng/py-dashboarding/master)
+
 # Visual Data Exploration Workshop
 
 
