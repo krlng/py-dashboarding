@@ -16,3 +16,4 @@ voila
 hvplot
 ipykernel
 geopandas
+dataprep
