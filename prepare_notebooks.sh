@@ -1,0 +1,2 @@
+jupyter nbconvert --clear-output --inplace solution/*.ipynb
+jupyter nbconvert solution/*.ipynb --TagRemovePreprocessor.enabled=True --TagRemovePreprocessor.remove_cell_tags task --to notebook --output-dir workshop
